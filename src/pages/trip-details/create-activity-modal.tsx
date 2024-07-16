@@ -1,5 +1,8 @@
 import { Calendar, Tag, X } from "lucide-react"
 import { Button } from "../../components/button"
+import { FormEvent } from "react"
+import { api } from "../../lib/axios"
+import { useParams } from "react-router-dom"
 
 interface CreateActivityModalProps {
     closeCreateActivityModal: () => void
@@ -8,6 +11,24 @@ interface CreateActivityModalProps {
 export function CreateActivityModal({
     closeCreateActivityModal
 } : CreateActivityModalProps) {
+
+    const { tripId } = useParams()
+
+    async function createActivity(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+
+        const data = new FormData(e.currentTarget)
+        const title = data.get('title')?.toString()
+        const occursAt = data.get('occurs-at')?.toString()
+
+        await api.post(`/trips/${tripId}/activities`, {
+            title,
+            occurs_at: occursAt
+        })
+
+        window.document.location.reload
+        // closeCreateActivityModal()
+    }
 
     return (
         <div className='fixed inset-0 bg-black/60 flex items-center justify-center'>
@@ -26,6 +47,7 @@ export function CreateActivityModal({
             </div>
 
             <form 
+                onSubmit={createActivity}
                 className='space-y-3'
             >
                 <div className='h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2'>
