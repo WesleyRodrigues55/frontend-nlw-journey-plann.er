@@ -5,10 +5,14 @@ import { ImportantLinks } from "./important-links";
 import { Guests } from "./guests";
 import { Activities } from "./activities";
 import { DestinationAndDateHeader } from "./destination-and-date-header";
-
+import { Button } from "../../components/button";
+import { CreateLinkModal } from "./create-link-modal";
 
 export function TripDetailsPage() {
     const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] = useState(false)
+    const [updatesTheListOfActivities, setUpdatesTheListOfActivities] = useState(false)
+    const [isCreateLinkModalOpen, setIsCreateLinkModalOpen] = useState(false)
+    const [updatesTheListOfLinks, setUpdatesTheListOfLinks] = useState(false)
 
     function openCreateActivityModal() {
         setIsCreateActivityModalOpen(true)
@@ -16,6 +20,14 @@ export function TripDetailsPage() {
 
     function closeCreateActivityModal() {
         setIsCreateActivityModalOpen(false)
+    }
+
+    function openCreateLinkModal() {
+        setIsCreateLinkModalOpen(true)
+    }
+
+    function closeCreateLinkModal() {
+        setIsCreateLinkModalOpen(false)
     }
 
     return (
@@ -31,21 +43,36 @@ export function TripDetailsPage() {
                             Atividades
                         </h2>
 
-                        <button 
+                        <Button 
                             onClick={openCreateActivityModal}
-                            className='bg-lime-300 text-lime-950 rounded-lg py-2 px-5 font-medium flex items-center gap-2 hover:bg-lime-400'
+                            variant="primary" 
                         >
                             <Plus className='size-5' />
                             Cadastrar atividade
-                        </button>
+                        </Button>
                     </div>
 
-                    <Activities />
+                    <Activities 
+                        setUpdatesTheListOfActivities={setUpdatesTheListOfActivities}
+                        updatesTheListOfActivities={updatesTheListOfActivities}
+                    />
 
                 </div>
 
                 <div className="w-80 space-y-6">
-                    <ImportantLinks />
+                    <ImportantLinks 
+                        setUpdatesTheListOfLinks={setUpdatesTheListOfLinks}
+                        updatesTheListOfLinks={updatesTheListOfLinks}
+                    />
+
+                    <Button 
+                        onClick={openCreateLinkModal}
+                        variant="secondary" 
+                        size="full"
+                    >
+                        <Plus className='size-5' />
+                        Cadastrar novo link
+                    </Button>
 
                     <div className='w-full h-px bg-zinc-800'></div>
 
@@ -57,9 +84,18 @@ export function TripDetailsPage() {
 
             {isCreateActivityModalOpen && (
                 <CreateActivityModal
+                    setUpdatesTheListOfActivities={setUpdatesTheListOfActivities}
                     closeCreateActivityModal={closeCreateActivityModal}
                 />
             )}
+
+            {isCreateLinkModalOpen && (
+                <CreateLinkModal
+                    setUpdatesTheListOfLinks={setUpdatesTheListOfLinks}
+                    closeCreateLinkModal={closeCreateLinkModal}
+                />
+            )}
+
         </div>
     )
 }

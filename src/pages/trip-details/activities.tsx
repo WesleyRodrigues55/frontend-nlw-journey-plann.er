@@ -14,20 +14,25 @@ interface Activity {
     }[]
 }
 
+interface ActivityProps {
+    updatesTheListOfActivities: boolean
+    setUpdatesTheListOfActivities: (isTrue: boolean) => void
+}
 
-export function Activities() {
+export function Activities({
+     updatesTheListOfActivities,
+     setUpdatesTheListOfActivities
+} : ActivityProps) {
     const { tripId } = useParams()
     const [activities, setActivities] = useState<Activity[]>([])
 
     useEffect(() => {
-
         api.get(`/trips/${tripId}/activities`)
-            .then(
-                response => setActivities(response.data.activities)
-            )
-        
+        .then( response => setActivities(response.data.activities) )
 
-    }, [tripId])
+        setUpdatesTheListOfActivities(false)
+
+    }, [setUpdatesTheListOfActivities, tripId, updatesTheListOfActivities])
 
     return (
         <div className="space-y-8">
@@ -43,7 +48,7 @@ export function Activities() {
                             <div className="space-y-2.5">
                                 {category.activities.map(activity => {
                                     return (
-                                        <div className="space-y-2.5">
+                                        <div  key={activity.id} className="space-y-2.5">
                                             <div className="px-4 py-2.5 bg-zinc-900 rounded-xl shadow-shape flex items-center gap-3">
                                                 <CircleCheck className="size-5 text-lime-300"/>
                                                 <span className="text-zinc-100">
@@ -66,41 +71,6 @@ export function Activities() {
                     </div>
                 )
             })}
-
-            
-            
-
-            <div className="space-y-2.5">
-                <div className="flex gap-2 items-baseline">
-                    <span className="text-xl text-zinc-300 font-semibold">Dia 18</span>
-                    <span className="text-xs text-zinc-500">Domingo</span>
-                </div>
-                <div className="space-y-2.5">
-                    <div className="px-4 py-2.5 bg-zinc-900 rounded-xl shadow-shape flex items-center gap-3">
-                        <CircleCheck className="size-5 text-lime-300"/>
-                        <span className="text-zinc-100">
-                            Academia em grupo
-                        </span>
-                        <span className="text-zinc-400 text-sm ml-auto">
-                            08:00h
-                        </span>
-                    </div>
-
-                </div>
-                <div className="space-y-2.5">
-                    <div className="px-4 py-2.5 bg-zinc-900 rounded-xl shadow-shape flex items-center gap-3">
-                        <CircleCheck className="size-5 text-lime-300"/>
-                        <span className="text-zinc-100">
-                            Academia em grupo
-                        </span>
-                        <span className="text-zinc-400 text-sm ml-auto">
-                            08:00h
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-
         </div>
     )
 }

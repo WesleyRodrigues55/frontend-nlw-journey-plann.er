@@ -6,6 +6,7 @@ import { DestinationAndDateStep } from './steps/destination-and-date-step'
 import { InviteGuestsSteps } from './steps/invite-guests-steps'
 import { DateRange } from 'react-day-picker'
 import { api } from '../../lib/axios'
+import { toast } from 'sonner'
   
 export function CreateTripPage() {
     const navigate = useNavigate()
@@ -69,19 +70,19 @@ export function CreateTripPage() {
         e.preventDefault()
 
         if (!destination) {
-            return
+            return toast.warning('Os campos precisam ser preenchidos')
         }
 
         if (!eventStartAndEndDates?.from || !eventStartAndEndDates?.to) {
-            return 
+            return toast.warning('Os campos precisam ser preenchidos') 
         }
 
         if (emailsToInvate.length === 0) {
-            return
+            return toast.warning('Os campos precisam ser preenchidos')
         }
 
         if (!ownerName || !ownerEmail) 
-            return
+            return toast.warning('Os campos precisam ser preenchidos')
 
         const response = await api.post('/trips', {
             destination,
@@ -92,9 +93,13 @@ export function CreateTripPage() {
             owner_email: ownerEmail ,
         })
 
+        
+        if (response.status != 200) {
+            return toast.error('occorreu um erro ao salvar o viagem.') 
+        }
+
+        toast.success('Viagem criada com sucesso!')
         const { tripId } = response.data 
-
-
         navigate(`/trips/${tripId}`)
     }
 
