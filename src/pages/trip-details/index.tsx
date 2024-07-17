@@ -8,6 +8,7 @@ import { DestinationAndDateHeader } from "./destination-and-date-header";
 import { Button } from "../../components/button";
 import { CreateLinkModal } from "./create-link-modal";
 import { EditGuestsModal } from "./edit-guests-modal";
+import { UpdateTripModal } from "./update-trip-modal";
 
 export function TripDetailsPage() {
     const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] = useState(false)
@@ -16,6 +17,8 @@ export function TripDetailsPage() {
     const [updatesTheListOfLinks, setUpdatesTheListOfLinks] = useState(false)
     const [isEditGuestsModalOpen, setIsEditGuestsModalOpen] = useState(false)
     const [createNewGuest, setCreateNewGuest] = useState(false)
+    const[isUpdateTripModalOpen, setIsUpdateTripModalOpen] = useState(false)
+    const [isUpdateTrip, setIsUpdateTrip] = useState(false)
 
     function openCreateActivityModal() {
         setIsCreateActivityModalOpen(true)
@@ -41,10 +44,23 @@ export function TripDetailsPage() {
         setIsEditGuestsModalOpen(false)
     }
 
+    function openUpdateTripModal() {
+        setIsUpdateTripModalOpen(true)
+    }
+
+    function closeUpdateTripModal() {
+        setIsUpdateTripModalOpen(false)
+    }
+
+
     return (
         <div className="max-w-6xl px-6 py-10 mx-auto space-y-8">
 
-            <DestinationAndDateHeader />
+            <DestinationAndDateHeader 
+                setIsUpdateTrip={setIsUpdateTrip}
+                isUpdateTrip={isUpdateTrip}
+                openUpdateTripModal={openUpdateTripModal}
+            />
 
             <main className="flex gap-16 px-4">
                 
@@ -116,6 +132,16 @@ export function TripDetailsPage() {
                     closeEditGuestModal={closeEditGuestModal}
                 />
             )}
+
+            {isUpdateTripModalOpen && (
+                <UpdateTripModal
+                    setIsUpdateTrip={setIsUpdateTrip}
+                    closeUpdateTripModal={closeUpdateTripModal}
+                    setUpdatesTheListOfActivities={setUpdatesTheListOfActivities}
+                />
+            )}
+
+   
 
         </div>
     )

@@ -13,7 +13,17 @@ interface Trip {
     is_confirmed: boolean
 }
 
-export function DestinationAndDateHeader() {
+interface DestinationAndDateHeaderProps {
+    openUpdateTripModal: () => void
+    setIsUpdateTrip: (isTrue: boolean) => void
+    isUpdateTrip: boolean
+}
+
+export function DestinationAndDateHeader({
+    openUpdateTripModal,
+    setIsUpdateTrip,
+    isUpdateTrip
+} : DestinationAndDateHeaderProps) {
     const { tripId } = useParams()
     const [trip, setTrip] = useState<Trip | undefined>()
 
@@ -23,12 +33,14 @@ export function DestinationAndDateHeader() {
             .then(
                 response => setTrip(response.data.trip)
             )
-
-    }, [tripId])
+        
+        setIsUpdateTrip(false)
+    }, [tripId, isUpdateTrip, setIsUpdateTrip])
 
     const displayedDate =  trip
     ? format(trip.starts_at, "d' de 'LLL").concat(' até ').concat(format(trip.ends_at, "d' de ' LLL "))
     : null
+
 
     return (
         <div className="px-4 h-16 rounded-xl bg-zinc-900 shadow-shape flex items-center justify-between">
@@ -49,7 +61,10 @@ export function DestinationAndDateHeader() {
 
                 <div className='w-px h-6 bg-zinc-800'></div>
 
-                <Button variant="secondary">
+                <Button 
+                    onClick={openUpdateTripModal}
+                    variant="secondary"
+                >
                     Alterar local/data
                     <Settings2 className='size-5' />
                 </Button>

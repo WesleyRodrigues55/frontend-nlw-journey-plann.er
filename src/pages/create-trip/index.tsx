@@ -7,6 +7,8 @@ import { InviteGuestsSteps } from './steps/invite-guests-steps'
 import { DateRange } from 'react-day-picker'
 import { api } from '../../lib/axios'
 import { toast } from 'sonner'
+import { setDefaultOptions } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
   
 export function CreateTripPage() {
     const navigate = useNavigate()
@@ -19,6 +21,7 @@ export function CreateTripPage() {
     const [ownerName, setOwnerName] = useState('')
     const [ownerEmail, setOwnerEmail] = useState('')
     const [eventStartAndEndDates, setEventStartAndEndDates] = useState<DateRange | undefined>()
+    setDefaultOptions({ locale: ptBR })
 
     function openGuestsInput() {
         setIsGuestsInputOpen(true)
