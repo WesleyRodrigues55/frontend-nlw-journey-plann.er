@@ -5,6 +5,13 @@ NLW Journey Event Rocketseat's Reactjs Trail,
  Development of a front-end application in ReactJS, application of the concepts of Properties, States and Components, typing with Typescript, tooling with Vite, responsive interface with TailwindCSS, consumption API Node.js, calendar picker.
 
 The application consists of being able to create or schedule an event and add people on that trip.
+The project contains the following features:
+- Create a trip
+- Add participants to the trip
+- Create activities
+- Create important links
+- Manage guest list
+- Manage set date of travel
 
 
 ## Project Images
