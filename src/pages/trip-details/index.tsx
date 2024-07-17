@@ -7,12 +7,15 @@ import { Activities } from "./activities";
 import { DestinationAndDateHeader } from "./destination-and-date-header";
 import { Button } from "../../components/button";
 import { CreateLinkModal } from "./create-link-modal";
+import { EditGuestsModal } from "./edit-guests-modal";
 
 export function TripDetailsPage() {
     const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] = useState(false)
     const [updatesTheListOfActivities, setUpdatesTheListOfActivities] = useState(false)
     const [isCreateLinkModalOpen, setIsCreateLinkModalOpen] = useState(false)
     const [updatesTheListOfLinks, setUpdatesTheListOfLinks] = useState(false)
+    const [isEditGuestsModalOpen, setIsEditGuestsModalOpen] = useState(false)
+    const [createNewGuest, setCreateNewGuest] = useState(false)
 
     function openCreateActivityModal() {
         setIsCreateActivityModalOpen(true)
@@ -28,6 +31,14 @@ export function TripDetailsPage() {
 
     function closeCreateLinkModal() {
         setIsCreateLinkModalOpen(false)
+    }
+
+    function openEditGuestModal() {
+        setIsEditGuestsModalOpen(true)
+    }
+
+    function closeEditGuestModal() {
+        setIsEditGuestsModalOpen(false)
     }
 
     return (
@@ -76,11 +87,14 @@ export function TripDetailsPage() {
 
                     <div className='w-full h-px bg-zinc-800'></div>
 
-                    <Guests />
+                    <Guests 
+                        setCreateNewGuest={setCreateNewGuest}
+                        createNewGuest={createNewGuest}
+                        openEditGuestModal={openEditGuestModal}
+                    />
                 </div>
 
             </main>
-
 
             {isCreateActivityModalOpen && (
                 <CreateActivityModal
@@ -93,6 +107,13 @@ export function TripDetailsPage() {
                 <CreateLinkModal
                     setUpdatesTheListOfLinks={setUpdatesTheListOfLinks}
                     closeCreateLinkModal={closeCreateLinkModal}
+                />
+            )}
+
+            {isEditGuestsModalOpen && (
+                <EditGuestsModal
+                    setCreateNewGuest={setCreateNewGuest}
+                    closeEditGuestModal={closeEditGuestModal}
                 />
             )}
 

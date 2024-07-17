@@ -11,7 +11,17 @@ interface Participant {
     is_confirmed: boolean
 }
 
-export function Guests() {
+interface GuestsProps {
+    openEditGuestModal: () => void
+    setCreateNewGuest: (isTrue: boolean) => void
+    createNewGuest: boolean
+}
+
+export function Guests({
+    openEditGuestModal,
+    setCreateNewGuest,
+    createNewGuest
+} : GuestsProps) {
     const { tripId } = useParams()
     const [participants, setParticipants] = useState<Participant[]>([])
 
@@ -21,16 +31,17 @@ export function Guests() {
             .then(
                 response => setParticipants(response.data.participants)
             )
-
-    }, [tripId])
+        
+            setCreateNewGuest(false)
+    }, [tripId, createNewGuest, setCreateNewGuest])
     
     return (
-        <div className="space-y-6">
-            <h2 className="text-xl  font-semibold">
+        <div className="space-y-6 overflow-hidden">
+            <h2 className="text-xl font-semibold">
                 Convidados
             </h2>
             
-            <div className="space-y-5">
+            <div className="space-y-5 overflow-y-scroll max-h-[320px] scroll-m-0 px-4">
                 {participants.map((participant, index) => {
                     return (
                         <div key={participant.id} className="flex items-center justify-between gap-4">
@@ -53,7 +64,11 @@ export function Guests() {
                 })}
             </div>
 
-            <Button variant="secondary" size="full">
+            <Button 
+                onClick={openEditGuestModal}
+                variant="secondary" 
+                size="full"
+            >
                 <UserCog className='size-5' />
                 Gerenciar convidados
             </Button>

@@ -36,8 +36,7 @@ export function ImportantLinks({
                 Links importantes
             </h2>
             
-            <div className="space-y-5">
-
+            <div className="space-y-5 overflow-y-scroll max-h-[320px] scroll-m-0 px-4">
                 {links.map((link, index) => {
                     return (
                         <div key={index} className="flex items-center justify-between gap-4">

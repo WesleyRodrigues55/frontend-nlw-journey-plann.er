@@ -34,7 +34,7 @@ export function CreateLinkModal({
         })
 
         if (response.status != 200) {
-            return toast.error('occorreu um erro ao salvar o link.') 
+            return toast.error('ocorreu um erro ao salvar o link.') 
         }
 
         toast.success('Link cadastrado com sucesso!')

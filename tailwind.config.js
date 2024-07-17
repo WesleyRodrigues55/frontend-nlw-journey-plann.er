@@ -14,7 +14,8 @@ export default {
             },
             backgroundImage: {
                 pattern: 'url(/bg.png)'
-            }
+            },
+
         },
     },
     plugins: [],
