@@ -7,6 +7,12 @@ NLW Journey Event Rocketseat's Reactjs Trail,
 The application consists of being able to create or schedule an event and add people on that trip.
 
 
+## Project Images
+
+<img src="./img/1.png" alt="imagem 1">
+<img src="./img/2.png" alt="imagem 2">
+
+
 ## Requirements for the project
 
 - [NodeJS](https://nodejs.org/en) - Recommended latest version
